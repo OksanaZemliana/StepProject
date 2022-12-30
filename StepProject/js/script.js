@@ -1,10 +1,11 @@
 'use strict';
-function changeClass (element, titlesList, className) {
+
+function changeClass(element, titlesList, className) {
     titlesList.forEach((item) => item.classList.remove(className));
     element.classList.add(className);
 }
 
-function selectContent (activeTab, contentList, className, dataAttribute) {
+function selectContent(activeTab, contentList, className, dataAttribute) {
     contentList.forEach((item) =>
         item.getAttribute(dataAttribute) === activeTab
             ? item.classList.add(className)
@@ -153,7 +154,7 @@ const imagesAddSecond = [
 const addImages = (arrayImages) => {
     loadingBtn();
     const ul = document.querySelector('.amazing-list__img');
-    let list = arrayImages.map((element, index) => {
+    let list = arrayImages.map((element) => {
         const li = document.createElement('li');
         li.classList.add('amazing-item__img');
         li.setAttribute('data-img', element[`data-img`])
@@ -186,7 +187,7 @@ const addImages = (arrayImages) => {
     ul.append(...list);
 }
 
-const loadingBtn =() =>{
+const loadingBtn = () => {
     const loadingImg = document.querySelector(".loader");
     const loadSvg = document.querySelector('.btn-load > svg');
     const loadSpan = document.querySelector('.btn-load > span');
@@ -198,16 +199,16 @@ const loadingBtn =() =>{
 // click button to add images
 const btnLoad = document.querySelector('.btn-load');
 let count = 0;
-btnLoad.addEventListener('click', ({target}) => {
-       count++;
+btnLoad.addEventListener('click', () => {
+    count++;
     loadingBtn();
     if (count === 1) {
-        setTimeout('addImages(imagesAddFirst)',      2000);
-         }
+        setTimeout('addImages(imagesAddFirst)', 2000);
+    }
     if (count === 2) {
         setTimeout('addImages(imagesAddSecond)', 2000);
         setTimeout('btnLoad.remove()', 2000);
-      }
+    }
 
 })
 
@@ -231,38 +232,44 @@ amazingListTab.addEventListener('click', ({target}) => {
 // section People Say TAB
 let index = 0;
 const profileListTab = document.querySelector(".wrapper-about__list__people");
-const profileListItems = document.querySelectorAll(".wrapper-about__list__people>li");
-const profileListContent = document.querySelectorAll('.wrapper-about__main__img>li');
+const profileListItems = document.querySelectorAll(".profile-item");
 const btnPrev = document.querySelector('.prev');
 const btnNext = document.querySelector('.next');
 
 profileListTab.addEventListener('click', ({target}) => {
+
+    const profileListContent = document.querySelectorAll('.wrapper-about__main__img>li');
     const item = target.closest('li');
-    changeClass(item, profileListItems, "top");
-    console.log("first");
-    selectContent(item.dataset.slider, profileListContent, "show", "data-slider");
-    console.log("second");
-    // profileListItems.forEach((item, i) => {
-    //     if (item.classList.contains('top')) {
-    //         index = i;
-    //     }
-    // });
+    if (item) {
+        changeClass(item, profileListItems, 'top');
+        selectContent(item.dataset.slider, profileListContent, 'show', 'data-slider');
+        profileListItems.forEach((item, i) => {
+            if (item.classList.contains('top')) {
+                index = i;
+
+            }
+        });
+    }
+
 });
 
 btnPrev.addEventListener('click', () => {
+    const profileListItems = document.querySelectorAll(".profile-item");
     --index;
     if (index < 0) {
         index = profileListItems.length - 1;
-        profileListItems[index].click();
     }
+    profileListItems[index].click();
+
 
 });
 btnNext.addEventListener('click', () => {
+    const profileListItems = document.querySelectorAll(".profile-item");
     ++index;
     if (index >= profileListItems.length) {
         index = 0;
-        profileListItems[index].click();
     }
+    profileListItems[index].click();
 
 });
 

@@ -262,6 +262,8 @@
 .wrapper-service.active {
     display: flex;
     align-items: center;
+    box-shadow: none;
+    color: #777777;
 }
 
 .content-service {
